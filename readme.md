@@ -1,25 +1,24 @@
-# Express Spotify Searcher
+# Buscador de Spotify 
 
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_eb6313ef8c1bd11e3732034ebd4edafa.png)
 
-## Introduction
+## Introducción
 
-[Spotify](https://www.spotify.com/us/) is a super cool music streaming service that provides you access to tons of music without ever having to buy an album.
+[Spotify](https://www.spotify.com/us/) es un servicio de transmisión de música genial que le brinda acceso a un montón de música sin tener que comprar un CD.
 
-Today, we're going to build an Express app to search Spotify for artists, albums, and tracks. Also, we'll be able to play a preview of some of these songs.
+Hoy, vamos a crear una aplicación Express para buscar artistas, álbumes y músicas en Spotify. Además, podremos reproducir una vista previa de algunas de estas canciones.
 
-<!-- To see the final product check out the deployed version: https://spotify-lab.herokuapp.com. -->
 
-It may seem like a lot, but let's break it down into steps!
+Puede parecer mucho, pero vamos a dividirlo en pasos.!
 
-## Requirements
+## Requerimientos
 
-- Fork this repo
-- Clone this repo
+- Hacer `fork` de este repositorio
+- Hacer `clone` de este repositorio
 
-## Submission
+## Entrega
 
-- Upon completion, run the following commands:
+- Una vez que terminar, corre los siguientes comandos:
 
 ```
 $ git add .
@@ -27,54 +26,54 @@ $ git commit -m "done"
 $ git push origin master
 ```
 
-- Create Pull Request so your TAs can check up your work.
+- Crear un `pull request`.
 
-## The key helper: `spotify-web-api-node` npm package
+## El ayudante clave: paquete npm `spotify-web-api-node`
 
-Spotify is great for streaming music from the app, but they also have a [Web Service](https://en.wikipedia.org/wiki/Web_service) for us developers to play with.
+Spotify es excelente para transmitir música desde la aplicación, pero también tienen un [Servicio web](https://en.wikipedia.org/wiki/Web_service) para que los desarrolladores podamos jugar.
 
-For the purpose of this exercise, we will be using the [`spotify-web-api-node` npm package](https://www.npmjs.com/package/spotify-web-api-node) (this is the link that will take you to the documentation so go ahead and open it). As we can find in the docs, this package gives us simple methods to make requests to Spotify, and give us back artists, albums, tracks, and more.
+Para el propósito de este ejercicio, usaremos el [paquete npm `spotify-web-api-node`](https://www.npmjs.com/package/spotify-web-api-node) (este es el enlace que te llevará a la documentación, así que hacé click). Como podemos encontrar en los documentos, este paquete nos brinda métodos simples para realizar solicitudes a Spotify y devolvernos artistas, álbumes, músicas y más.
 
-**In this lab, we have two main goals**:
+**En este ejercicio, tenemos dos objetivos principales **:
 
-- We are going to apply our knowledge of GET method and when and why to use `req.query` and `req.params`.
-- We are going to practice how to **read the documentation** (of this npm package particularly) and how to use the examples provided by the docs to successfully finish all the iterations.
+- Vamos a aplicar nuestro conocimiento del método GET y cuándo y por qué usar `req.query` y `req.params`.
+- Vamos a practicar cómo **leer la documentación** (de este paquete npm en particular) y cómo usar los ejemplos proporcionados por los documentos para terminar todas las iteraciones.
 
-### Registering the app and getting the credentials
+### Registrar la aplicación y obtener las credenciales
 
-The **Spotify** API will need a `clientId` and `clientSecret` in order to give us permission to make requests and get some data back. To get `clientId` and `clientSecret`, we have to register our app on the official Spotify Developers web site (you won't be charged for this, and no credit card information will be required). Let's follow these steps:
+La API de **Spotify** necesitará un `clientId` y un` clientSecret` para darnos permiso para realizar solicitudes y recuperar algunos datos. Para obtener `clientId` y` clientSecret`, tenemos que registrar nuestra aplicación en el sitio web oficial de Spotify Developers. Sigamos estos pasos:
 
-1. Navigate to [Spotify Developers](https://developer.spotify.com/my-applications/#!/).
-2. Click on the "Log In" button. If you do not have an account, you will be asked to create one, it´s free :wink:.
-3. After logging in, click on the **Create an App** button.
+1. Vaya a [Spotify Developers](https://developer.spotify.com/my-applications/#!/).
+2. Haga clic en el botón "Iniciar sesión". Si no tiene una cuenta, se le pedirá que cree una, es gratis :wink:.
+3. Después de iniciar sesión, haga clic en el botón **Crear una aplicación**.
 
-The following screens might be out of date, since Spotify is constantly iterating on their interface, but that shouldn't stop you from completing these steps. You got this!
+Las siguientes pantallas pueden estar desactualizadas, ya que Spotify está iterando constantemente en su interfaz, pero eso no debería impedirte completar estos pasos. ¡Lo tienes!
 
-<!-- ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_a3a19d215083c5526df1f53f3c1fdf6f.png) -->
+4. Complete los campos y envíe el formulario.
 
-4. Fill the fields and submit the form.
+![](https://i.imgur.com/jgN0WzG.png)
 
-![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_db933b4f08d71ceff0b0d5d4ca124594.png)
 
-5. We are ready to go! We have all the info we need :muscle: Let´s start!
+5. Ya tenemos toda la info que necesitamos :muscle: 
 
-![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_8859d022ca1d53adc9f9ec829ec3d17b.png)
+![](https://i.imgur.com/nNJXedu.png)
 
-## Iteration 1 | Spotify API Setup
 
-In the next few steps, you'll create all of the files that you need. So far, you have some basic setup in `app.js`, but that's not quite enough. As you remember, to get some packages (including `express`) in our app, we have to have them in the `package.json` file. So let's start listing the steps:
+## Iteración 1 | Setup de la Spotify API
 
-1. Let's install all the dependencies we need to successfully run this app:
-   `npm install express hbs spotify-web-api-node dotenv`.
-2. `nodemon` is installed as a dev dependency (our app doesn't depend on it but it helps us in the development process), which means we can use nodemon to run the app with: **`npm run dev`**.
+En los siguientes pasos, crearemos todos los archivos que necesitamos. Hasta ahora, tenemos una configuración básica en `app.js`, pero eso no es suficiente. Como recordarás, para obtener algunos paquetes (incluido `express`) en nuestra aplicación, debemos tenerlos en el archivo` package.json`. Así que comencemos a enumerar los pasos:
 
-3. Inside of the `app.js` file, require `spotify-web-api-node`.
+1. Instalemos todas las dependencias que necesitamos para ejecutar con éxito esta aplicación:
+    `npm install express hbs spotify-web-api-node dotenv`.
+2. `nodemon` se instala como una dependencia de desarrollo (nuestra aplicación no depende de él, pero nos ayuda en el proceso de desarrollo), lo que significa que podemos usar nodemon para ejecutar la aplicación con: **`npm run dev`**.
+
+3. Dentro del archivo `app.js`, requiere` spotify-web-api-node`.
 
 ```js
 const SpotifyWebApi = require('spotify-web-api-node');
 ```
 
-4. Inside of the `app.js` file, you'll find the place where you should paste the following code:
+4. Dentro del archivo `app.js`, encontrarás el lugar donde debes pegar el siguiente código:
 
 ```javascript
 const spotifyApi = new SpotifyWebApi({
@@ -89,7 +88,7 @@ spotifyApi
   .catch(error => console.log('Something went wrong when retrieving an access token', error));
 ```
 
-5. See this above?
+5. Ves esta parte?
 
 ```js
 const spotifyApi = new SpotifyWebApi({
@@ -98,30 +97,32 @@ const spotifyApi = new SpotifyWebApi({
 });
 ```
 
-To avoid making our API keys public, we don't want to add and commit them. We'll use a package named `dotenv` for that.
+Para evitar hacer públicas nuestras claves de API, no queremos agregarlas directamente al `app.js`. Usaremos un paquete llamado `dotenv` para eso.
 
-This package is imported at the very beginning of `app.js`. All that is left to do is to add your keys in the `.env` file.
-So go ahead and create a `.env` file and paste the following lines there, replacing the text with your credentials.
+Este paquete se importa al comienzo de `app.js`. Todo lo que queda por hacer es agregar sus claves en el archivo `.env`.
+
+Así que adelante, crea un archivo `.env` y pega las siguientes líneas allí, reemplazando el texto con sus credenciales.
 
 ```
-CLIENT_ID=your clientId goes here
-CLIENT_SECRET=your clientSecret goes here
+CLIENT_ID=tu clientId va acá
+CLIENT_SECRET=tu clientSecret va acá
 ```
 
-:zap: The `.env` is referred to in the `.gitignore` file so you're safe!
+:zap: Se hace referencia al `.env` en el archivo` .gitignore` para que esté seguro que no se subirá a nuestro repositorio de `github`!
 
-:fire: _Styling should be the last thing you focus on. Functionality first!_ 🙏🏻
+:fire: _El estilo debe ser lo último en lo que te concentres. ¡Funcionalidad primero!_ 🙏🏻
 
-## Iteration 2 | Express Setup
+## Iteración 2 | Setup de Express
 
-Now let's create a `views` folder and let's add the `layout.hbs` file in it.
-At this moment we should have the following structure of folders and files:
+Ahora creemos una carpeta `views` y agreguemos el archivo` layout.hbs` en ella. En este momento deberíamos tener la siguiente estructura de carpetas y archivos:
 
 ```
 lab-express-spotify
       ├── app.js
+      ├── .env
       ├── package.json
       ├── package-lock.json
+      ├── node_modules
       ├── public
       │    ├── images
       │    └── stylesheets
@@ -130,7 +131,7 @@ lab-express-spotify
             └── layout.hbs
 ```
 
-As we can see, in your _app.js_ we have required all the packages we need for now:
+Como podemos ver, en el _app.js_ hemos requerido todos los paquetes que necesitamos por ahora:
 
 ```javascript
 const express = require('express');
@@ -138,57 +139,57 @@ const hbs = require('hbs');
 const SpotifyWebApi = require('spotify-web-api-node');
 ```
 
-We are good to go. Let's open the [spotify-web-api-node](https://www.npmjs.com/package/spotify-web-api-node) documentation and start our journey!
+Estamos todo listo. ¡Abramos la documentación de [spotify-web-api-node](https://www.npmjs.com/package/spotify-web-api-node) y comencemos!
 
-## Iteration 3 | Search for an Artist
+## Iteración 3 | Buscar un **Artista**
 
-**You can keep all your routes in the `app.js` after where it states: _// Our routes go here:_.**
+**Puedes crear todas tus rutas en el archivo `app.js` **
 
-### Step 1 | Create a Homepage
+### Paso 1 | Crear la Homepage
 
-Create a route that renders a simple home page. You'll need a basic index route, that renders a home page. On this page, you should have a small search `form` that has an input field receiving an artist's name and a button that submits the request.
+Cree una ruta que muestre la página de inicio. Necesitaremos una ruta `'/'`, que muestre una página de inicio. En esta página, debe tener un pequeño "formulario" de búsqueda que tiene un `input` que recibe el nombre de un artista y un botón que envía la solicitud.
 
-This form should direct its query to `/artist-search` (`action="/artist-search", method="GET"`).
-The result should be something along these lines but leave styling for the end.
+Este formulario debe dirigir su consulta a `/artist-search` (`action="/artist-search", method="GET"`).
+El resultado debería ser algo así, pero deje el estilo para el final.
 
 ![](https://i.imgur.com/YuTA0vQ.png=400x)
 
-### Step 2 | Display results for artist search
+### Paso 2 | Mostrar resultados para la búsqueda de artistas
 
-Okay, our search form submitted to `/artist-search` route. We still don't have this route created so let's do it!
-This route will receive the search term from the `query` string, and make a search request using one of the methods of the Spotify npm package. You have the documentation open :wink: but we will help you with your first step.
+Bien, nuestro formulario de búsqueda se envió a la ruta `/artist-search`. Todavía no hemos creado esta ruta, ¡hagámoslo!
 
-The method we will use from the npm package is: `spotifyApi.searchArtists()`. In this route, you should have something like this:
+Esta ruta recibirá el término de búsqueda en el `query` y realizará una solicitud de búsqueda utilizando uno de los métodos del paquete `npm de Spotify`. Tienes la documentación abierta :wink: pero te ayudaremos con tu primer paso.
+
+El método que usaremos del paquete npm es: `spotifyApi.searchArtists()`. En esta ruta, debería tener algo como esto:
 
 ```javascript
 spotifyApi
-  .searchArtists(/*'HERE GOES THE QUERY ARTIST'*/)
+  .searchArtists(/*'ACA VA LA CONSULTA DE LOS ARTISTAS'*/)
   .then(data => {
     console.log('The received data from the API: ', data.body);
-    // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
+    // ----> 'ACA HACEMOS LO QUE QUEREMOS CON LO QUE RECIBIMOS DE LA RUTA'
   })
   .catch(err => console.log('The error while searching artists occurred: ', err));
 ```
 
-In order to display the found artists' information, create `artist-search-results.hbs` file inside `views` folder and display name, image, and button (or link) to show the albums for a particular artist on a new view (for now just create the button/link and we will take care of the rest in the next step). Again, styling is not your priority, so let's move to the next step.
-<br><br>
+Para mostrar la información de los artistas encontrados, cree el archivo `artist-search-results.hbs` dentro de la carpeta `views` y muestre el nombre, la imagen y el botón (o enlace) para mostrar los álbumes de un artista en particular en una nueva vista (por ahora solo crea el botón/enlace y nos encargaremos del resto en el siguiente paso). Nuevamente, el estilo no es prioridad, así que pasemos al siguiente paso.
+
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_9dc721e76158df1836ef07565b5385c2.png)
 
-## Iteration 4 | View Albums
+## Iteración 4 | Ver álbums
 
-On the `artist-search-results.hbs` page we created the `View albums` button/link. Users should be taken to _some other page_ after clicking on it and there be able to see all the albums of that particular artist. **Hint**: the URL should include artist's `id` 🤓 and should change dynamically.
+En la página `artist-search-results.hbs` creamos el botón/enlace` Ver álbumes`. Los usuarios deben ser llevados a otra página después de hacer clic en ella y podrán ver todos los álbumes de ese artista en particular. **Sugerencia:** **la URL debe incluir el `id` 🤓 del artista y debe cambiar dinámicamente.**
+
 
 ```html
-<a href="/albums/someArtistIdGoesHere">View Albums</a>
+<a href="/albums/elIDdelArtistaVaAcá">Ver Albums</a>
 ```
 
-So let's create a new page - `albums.hbs` where all the results will be displayed. Make sure you show the _name_ and the _cover_ of each album and add a button/link to see the tracks (next iteration).
+Así que creemos una nueva página - `albums.hbs` donde se mostrarán todos los resultados. Asegúrese de mostrar el _nombre_ y la _cubierta_ de cada álbum y agregue un botón/enlace para ver las músicas (próxima iteración).
 
-:zap: Check out the `.getArtistAlbums()` method in the [spotify-web-api-node](https://www.npmjs.com/package/spotify-web-api-node) documentation.
+:zap: Mira el método `.getArtistAlbums()` en la documentación [spotify-web-api-node](https://www.npmjs.com/package/spotify-web-api-node).
 
-**Hint**:
-
-Your route should look like the following:
+La ruta se tiene que ver así:
 
 ```javascript
 app.get('/albums/:artistId', (req, res, next) => {
@@ -198,22 +199,17 @@ app.get('/albums/:artistId', (req, res, next) => {
 
 ![](https://i.imgur.com/oaoqQMj.png)
 
-This is going good so far, so let's finish up with our last iteration.
+Esto va bien hasta ahora, así que terminemos con nuestra última iteración.
 
-## Iteration 5 | View Tracks
+## Iteración 5 | Ver músicas
 
-Create the `View tracks` link on the albums page. This link should take you to a page with a list of all of the tracks on a particular album.
+Crea el enlace `Ver músicas` en la página de álbumes. Este enlace debería llevarle al usuario a una página con una lista de todas las músicas de un álbum en particular.
 
-**Hint**: The link to the tracks page should have each album's _id_ in it. <br>
-**Note**: :zap: Check out the `.getAlbumTracks()` method in the `spotify-web-api-node` documentation.
+**Consejo**: El enlace a la página de pistas debe tener el _id_ de cada álbum.
+**Notas**: :zap: Consulta el método `.getAlbumTracks()` en la documentación de `spotify-web-api-node`.
 
-A track object comes with a `preview_url`, which is the source for a 30-second preview of a particular song. You can plug this into an HTML [`audio`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) tag, and it will play the preview.
+Un objeto de músicas viene con una `preview_url`, que es la fuente de una vista previa de 30 segundos de una canción en particular. Puede conectar esto en una etiqueta HTML [`audio`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), y reproducirá la vista previa.
 
 ![](https://i.imgur.com/XVKoeqg.png)
-
-### The summary of requirements
-
-- Total of five pages with (1)artist / (2)album / (3)track information (all populated from Spotify) + (4)layout + (5)home.
-- Some styling, it doesn't have to look like the example.
 
 Happy Coding! 💙
