@@ -1,0 +1,29 @@
+<div class="container p-3 my-3">
+  <br />
+  <a href="/" class="btn btn-sm btn-dark" role="button">Go Home</a>
+  <br /><br /><br />
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Listen</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each items}}
+        <tr>
+          <td>{{name}}</td>
+          <td><figure class="float-left">
+              <figcaption></figcaption>
+              <audio controls src="{{preview_url}}">
+                Your browser does not support the
+                <code>audio</code>
+                element.
+              </audio>
+            </figure>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
