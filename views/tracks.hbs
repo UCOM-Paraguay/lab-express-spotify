@@ -1,10 +1,15 @@
 <div class="container p-3 my-3">
   <br />
-  <a href="/" class="btn btn-sm btn-dark" role="button">Go Home</a>
-  <br /><br /><br />
+  <div class="row">
+    <div class="col text-right">
+      <a href="/" class="btn btn-sm btn-dark" role="button">Go Home</a>
+    </div>
+  </div>
+
+  <br />
   <table class="table">
     <thead class="thead-dark">
-      <tr>
+      <tr class="text-center">
         <th scope="col">Title</th>
         <th scope="col">Listen</th>
       </tr>
@@ -13,7 +18,7 @@
       {{#each items}}
         <tr>
           <td>{{name}}</td>
-          <td><figure class="float-left">
+          <td><figure class="float-right">
               <figcaption></figcaption>
               <audio controls src="{{preview_url}}">
                 Your browser does not support the

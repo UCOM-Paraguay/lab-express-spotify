@@ -1,29 +1,13 @@
-<div class="container">
-  <div class="row">
-    <div class="col-2">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-8">
-      <section class="index-container">
-        <div class="form-box">
-          <form action="/artist-search" method="GET">
-            <input id="artist" class="form-control" type="text" name="artist" />
-            <br />
-            <button
-              type="submit"
-              class="btn btn-lg btn-danger"
-              style="text-align: center;"
-            >
-              Search for an artist
-            </button>
-          </form>
-        </div>
-      </section>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-2">
-    </div>
+<div class="whole">
+  <div id="square">
+    <form action="/artist-search" method="GET">
+      <input id="artist" class="form-control" type="text" name="artist" />
+      <br />
+      <div class="row justify-content-center">
+        <button type="submit" class="btn btn-sm btn-danger">
+          Search for an Artist
+        </button>
+      </div>
+    </form>
   </div>
 </div>

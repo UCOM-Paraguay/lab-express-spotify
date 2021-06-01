@@ -44,9 +44,7 @@ app.get("/artist-search", (req, res, next) => {
     .then((data) => {
       //console.log("The received data from the API: ", data.body);
       console.log("The received data from the API body: ", data.body.artists);
-      console.log(
-        "-------------------------------------------------------------"
-      );
+      console.log("----------------------------------------------------------");
       res.render("artist-search-results", data.body.artists);
     })
     .catch((err) =>
@@ -58,17 +56,11 @@ app.get("/albums/:artistId", (req, res, next) => {
   let artistId = req.params.artistId;
 
   spotifyApi
-    .getArtistAlbums(artistId, { limit: 10, offset: 20 })
+    .getArtistAlbums(artistId)
     .then((data) => {
       console.log("The received data from the API: ", data.body);
-      console.log(
-        "#############################################################"
-      );
-      if (data.body.items.length === 0) {
-        //alert("Sin albunes");
-      } else {
-        res.render("artist-search-results", data.body);
-      }
+      console.log("#######################################################");
+      res.render("albums-search-results", data.body);
     })
     .catch((err) =>
       console.log("The error while searching albums occurred: ", err)
@@ -83,11 +75,8 @@ app.get("/tracks/:albumId", (req, res, next) => {
     .getAlbumTracks(albumId)
     .then((data) => {
       console.log("The received data from the API: ", data.body.items);
-      if (data.body.items.length === 0) {
-        //alert("Sin albunes");
-      } else {
-        res.render("tracks", data.body);
-      }
+      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+      res.render("tracks", data.body);
     })
     .catch((err) =>
       console.log("The error while searching tracks occurred: ", err)
