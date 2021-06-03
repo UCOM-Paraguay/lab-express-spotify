@@ -1,0 +1,21 @@
+
+<div class="container">
+    <h1>Album : {{album}}</h1>
+    <br>
+  {{#each items}}
+    
+<div class="row" >
+  <div class="col-sm-4 offset-md-2">
+    <h3>
+      {{track_number}}-{{name}}
+    </h3>
+    </div>
+    <div class="col-sm-4">
+    <audio controls>
+      <source src="{{preview_url}}">
+    </audio>  
+    </div>
+</div>
+<br>
+  {{/each}}
+</div>
