@@ -1,0 +1,21 @@
+
+.whole {
+
+    overflow: hidden;
+    height: calc(100vh - 20px);
+    background-image: url("/images/spotify-background.jpeg");
+    background-color: #cccccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    
+.whole #square {
+      width: 400px;
+      height: 175px;
+      margin: 30vh auto;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 50px 20px; 
+}
+    
+  
